@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<database>
+    <element label="Review" max_length="40" name="sn_codereview_review" type="collection">
+        <element default="true" label="Active" max_length="40" name="active" type="boolean"/>
+        <element label="branch" mandatory="true" max_length="100" name="branch" type="string"/>
+        <element display="true" label="Description" mandatory="true" max_length="200" name="description" type="string"/>
+        <element label="Owner" mandatory="true" max_length="32" name="owner" reference="sys_user" type="reference"/>
+        <element label="Parent Branch" mandatory="true" max_length="200" name="parent_branch" type="string"/>
+        <index name="index">
+            <element name="owner"/>
+        </index>
+    </element>
+</database>
