@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update table="sys_ws_operation">
+    <sys_ws_operation action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <consumes>application/json,application/xml,text/xml</consumes>
+        <consumes_customized>false</consumes_customized>
+        <default_operation_uri/>
+        <enforce_acl/>
+        <http_method>POST</http_method>
+        <name>Checkout</name>
+        <operation_script><![CDATA[(function process(/*RESTAPIRequest*/ request, /*RESTAPIResponse*/ response) {
+    // implement resource here
+	var putData = request.body.data;
+	var branchName = putData.branchName;
+	var reviewID = putData.reviewID;
+	
+	var reviewGR = new GlideRecord("sn_codereview_review");
+	if (reviewID) {
+		if (!reviewGR.get(reviewID))
+			return {
+				error: "Specified code review does not exist."
+			};
+	} else if (branchName) {
+		reviewGR.addQuery("branch", branchName);
+		reviewGR.query();
+		if (!reviewGR.hasNext())
+			return {
+				error: "Specified code review does not exist."
+			};
+		else
+			reviewGR.next();
+	} else {
+		return {
+			error: "Please provide either a branch name or sys_id for the review in question."
+		};
+	}
+	
+	var userID = gs.getUserID();
+	var reviewOwner = reviewGR.getValue("owner");
+	if (reviewOwner == userID)
+		return {
+			error: "Users cannot check out their own reviews."
+		};
+	
+	var m2mReviewUserGR = new GlideRecord("sn_codereview_reviewer");
+	//m2mReviewUserGR.addQuery("user", userID);
+	m2mReviewUserGR.addQuery("name", userID);
+	m2mReviewUserGR.addQuery("review", reviewGR.getUniqueValue());
+	m2mReviewUserGR.query();
+	if (m2mReviewUserGR.hasNext())
+		return {
+			error: "This code review has already been checked out by this user."
+		};
+	m2mReviewUserGR.initialize();
+	m2mReviewUserGR.setValue("user", userID);
+	m2mReviewUserGR.setValue("review", reviewGR.getUniqueValue());
+	m2mReviewUserGR.insert();
+	
+	return reviewGR.getUniqueValue();
+})(request, response);]]></operation_script>
+        <operation_uri>/api/sn_codereview/checkout_review</operation_uri>
+        <produces>application/json,application/xml,text/xml</produces>
+        <produces_customized>false</produces_customized>
+        <relative_path>/</relative_path>
+        <request_example/>
+        <requires_acl_authorization>false</requires_acl_authorization>
+        <requires_authentication>true</requires_authentication>
+        <short_description/>
+        <sys_class_name>sys_ws_operation</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2017-06-04 04:44:43</sys_created_on>
+        <sys_id>9742aa0b6703320023c82e08f585ef4a</sys_id>
+        <sys_mod_count>10</sys_mod_count>
+        <sys_name>Checkout</sys_name>
+        <sys_package display_value="CodeReview" source="sn_codereview">8d80e4fd6722320023c82e08f585ef22</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="CodeReview">8d80e4fd6722320023c82e08f585ef22</sys_scope>
+        <sys_update_name>sys_ws_operation_9742aa0b6703320023c82e08f585ef4a</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2017-06-04 06:10:13</sys_updated_on>
+        <web_service_definition display_value="Code Reviews">df361a876703320023c82e08f585efcf</web_service_definition>
+        <web_service_version/>
+    </sys_ws_operation>
+</record_update>

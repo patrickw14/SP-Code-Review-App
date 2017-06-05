@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<database>
+    <element label="Reviewer" max_length="40" name="sn_codereview_reviewer" type="collection">
+        <element label="comments" max_length="500" name="comments" type="string"/>
+        <element choice="3" default="pending" label="Decision" max_length="40" name="decision" type="choice">
+            <choice>
+                <element label="Approved" value="approved"/>
+                <element label="Pending" value="pending"/>
+                <element label="Rejected" value="rejected"/>
+            </choice>
+        </element>
+        <element default="javascript:gs.getUserID()" display="true" dynamic_default_value="2fd8e97bef3221002841f7f775c0fbc1" label="name" max_length="250" name="name" reference="sys_user" type="reference" use_dynamic_default="true"/>
+        <element label="review" max_length="32" name="review" reference="sn_codereview_review" type="reference"/>
+        <index name="index">
+            <element name="review"/>
+        </index>
+    </element>
+</database>

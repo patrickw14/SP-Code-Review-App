@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <record_update>
-    <sys_dictionary action="INSERT_OR_UPDATE" element="owner" table="sn_codereview_review">
+    <sys_dictionary action="INSERT_OR_UPDATE" element="" table="sn_codereview_reviewer">
         <active>true</active>
         <array>false</array>
         <array_denormalized>false</array_denormalized>
@@ -15,10 +15,10 @@
         <choice/>
         <choice_field/>
         <choice_table/>
-        <column_label>Owner</column_label>
+        <column_label/>
         <comments/>
         <create_roles/>
-        <default_value>javascript:gs.getUserID()</default_value>
+        <default_value/>
         <defaultsort/>
         <delete_roles/>
         <dependent/>
@@ -26,20 +26,20 @@
         <display>false</display>
         <dynamic_creation>false</dynamic_creation>
         <dynamic_creation_script/>
-        <dynamic_default_value display_value="Sender">2fd8e97bef3221002841f7f775c0fbc1</dynamic_default_value>
+        <dynamic_default_value/>
         <dynamic_ref_qual/>
-        <element>owner</element>
+        <element/>
         <element_reference>false</element_reference>
         <foreign_database/>
-        <internal_type display_value="Reference">reference</internal_type>
-        <mandatory>true</mandatory>
-        <max_length>32</max_length>
-        <name>sn_codereview_review</name>
+        <internal_type display_value="Collection">collection</internal_type>
+        <mandatory>false</mandatory>
+        <max_length>40</max_length>
+        <name>sn_codereview_reviewer</name>
         <next_element/>
         <primary>false</primary>
         <read_only>false</read_only>
         <read_roles/>
-        <reference display_value="" name="sys_user">sys_user</reference>
+        <reference/>
         <reference_cascade_rule/>
         <reference_floats>false</reference_floats>
         <reference_key/>
@@ -51,21 +51,21 @@
         <staged>false</staged>
         <sys_class_name>sys_dictionary</sys_class_name>
         <sys_created_by>admin</sys_created_by>
-        <sys_created_on>2017-05-06 01:42:03</sys_created_on>
-        <sys_id>7a71a4316762320023c82e08f585efb4</sys_id>
-        <sys_mod_count>3</sys_mod_count>
-        <sys_name>Owner</sys_name>
+        <sys_created_on>2017-05-27 05:27:01</sys_created_on>
+        <sys_id>a5ef59e06703320023c82e08f585efec</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>sn_codereview_reviewer</sys_name>
         <sys_package display_value="CodeReview" source="sn_codereview">8d80e4fd6722320023c82e08f585ef22</sys_package>
         <sys_policy/>
         <sys_scope display_value="CodeReview">8d80e4fd6722320023c82e08f585ef22</sys_scope>
-        <sys_update_name>sys_dictionary_sn_codereview_review_owner</sys_update_name>
+        <sys_update_name>sys_dictionary_sn_codereview_reviewer_null</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2017-05-27 05:41:11</sys_updated_on>
+        <sys_updated_on>2017-05-27 05:27:01</sys_updated_on>
         <table_reference>false</table_reference>
         <text_index>false</text_index>
         <unique>false</unique>
         <use_dependent_field>false</use_dependent_field>
-        <use_dynamic_default>true</use_dynamic_default>
+        <use_dynamic_default>false</use_dynamic_default>
         <use_reference_qualifier>simple</use_reference_qualifier>
         <virtual>false</virtual>
         <widget/>

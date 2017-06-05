@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update table="sys_ws_operation">
+    <sys_ws_operation action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <consumes>application/json,application/xml,text/xml</consumes>
+        <consumes_customized>false</consumes_customized>
+        <default_operation_uri/>
+        <enforce_acl/>
+        <http_method>POST</http_method>
+        <name>Reject Review</name>
+        <operation_script><![CDATA[(function process(/*RESTAPIRequest*/ request, /*RESTAPIResponse*/ response) {
+    // implement resource here
+	var reviewID = request.pathParams.id;
+	
+	if (!request.body.data.comment)
+		return {
+			error: "Missing explanation."
+		};
+	
+	var reviewGR = new GlideRecord("sn_codereview_review");
+	if (!reviewGR.get(reviewID))
+		return {
+			error: "A code review with that ID does not exist."
+		};
+	
+	var reviewerGR = new GlideRecord("sn_codereview_reviewer");
+	reviewerGR.addQuery("name", gs.getUserID());
+	reviewerGR.addQuery("review", reviewID);
+	reviewerGR.query();
+	if (!reviewerGR.next())
+		return {
+			error: "You cannot approve a review that you have not checked out."
+		};
+	
+	if (reviewerGR.getValue("decision") == "rejected")
+		return {
+			error: "You've already approved this review."
+		};
+	
+	reviewerGR.setValue("decision", "rejected");
+	reviewerGR.setValue("comments", request.body.data.comment);
+	reviewerGR.update();
+	
+	return {
+		author: reviewGR.getDisplayValue("owner"),
+		sys_id: reviewGR.getUniqueValue()
+	};
+})(request, response);]]></operation_script>
+        <operation_uri>/api/sn_codereview/checkout_review/reject/{id}</operation_uri>
+        <produces>application/json,application/xml,text/xml</produces>
+        <produces_customized>false</produces_customized>
+        <relative_path>/reject/{id}</relative_path>
+        <request_example/>
+        <requires_acl_authorization>false</requires_acl_authorization>
+        <requires_authentication>true</requires_authentication>
+        <short_description/>
+        <sys_class_name>sys_ws_operation</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2017-06-05 05:48:26</sys_created_on>
+        <sys_id>04cabf576743320023c82e08f585efa9</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Reject Review</sys_name>
+        <sys_package display_value="CodeReview" source="sn_codereview">8d80e4fd6722320023c82e08f585ef22</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="CodeReview">8d80e4fd6722320023c82e08f585ef22</sys_scope>
+        <sys_update_name>sys_ws_operation_04cabf576743320023c82e08f585efa9</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2017-06-05 05:48:26</sys_updated_on>
+        <web_service_definition display_value="Code Reviews">df361a876703320023c82e08f585efcf</web_service_definition>
+        <web_service_version/>
+    </sys_ws_operation>
+</record_update>

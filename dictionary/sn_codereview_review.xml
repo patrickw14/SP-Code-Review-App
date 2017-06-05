@@ -4,8 +4,16 @@
         <element default="true" label="Active" max_length="40" name="active" type="boolean"/>
         <element label="branch" mandatory="true" max_length="100" name="branch" type="string"/>
         <element display="true" label="Description" mandatory="true" max_length="200" name="description" type="string"/>
-        <element label="Owner" mandatory="true" max_length="32" name="owner" reference="sys_user" type="reference"/>
+        <element label="Link" max_length="1024" name="link" type="url"/>
+        <element default="javascript:gs.getUserID()" dynamic_default_value="2fd8e97bef3221002841f7f775c0fbc1" label="Owner" mandatory="true" max_length="32" name="owner" reference="sys_user" type="reference" use_dynamic_default="true"/>
         <element label="Parent Branch" mandatory="true" max_length="200" name="parent_branch" type="string"/>
+        <element choice="3" default="open" label="State" mandatory="true" max_length="40" name="state" type="choice">
+            <choice>
+                <element label="Approved" value="approved"/>
+                <element label="Open" value="open"/>
+                <element label="Rejected" value="rejected"/>
+            </choice>
+        </element>
         <index name="index">
             <element name="owner"/>
         </index>
