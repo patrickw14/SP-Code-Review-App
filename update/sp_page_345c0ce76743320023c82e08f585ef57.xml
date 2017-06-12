@@ -1,38 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <record_update table="sp_page">
     <sp_page action="INSERT_OR_UPDATE">
-        <background_image/>
         <css>.page {
   background: black;
   color: white;
 }</css>
-        <customer_update>false</customer_update>
         <draft>false</draft>
-        <headerless>false</headerless>
-        <hide_breadcrumbs>false</hide_breadcrumbs>
+        <dynamic_title_source_field/>
+        <dynamic_title_source_table/>
+        <dynamic_title_structure/>
         <id>codereviewdash</id>
+        <id_parameter/>
         <internal>false</internal>
+        <is_dynamic_title>false</is_dynamic_title>
         <public>false</public>
-        <replace_on_upgrade>false</replace_on_upgrade>
         <roles/>
         <short_description/>
-        <sp_configuration/>
-        <sp_portal/>
         <sys_class_name>sp_page</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2017-06-05 07:03:37</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>345c0ce76743320023c82e08f585ef57</sys_id>
         <sys_mod_count>2</sys_mod_count>
         <sys_name>codereviewdash</sys_name>
         <sys_package display_value="CodeReview" source="sn_codereview">8d80e4fd6722320023c82e08f585ef22</sys_package>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="CodeReview">8d80e4fd6722320023c82e08f585ef22</sys_scope>
         <sys_update_name>sp_page_345c0ce76743320023c82e08f585ef57</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
         <sys_updated_on>2017-06-05 07:27:50</sys_updated_on>
-        <theme/>
         <title>Code Review Dashboard</title>
+        <title_script/>
+        <use_scripted_title>false</use_scripted_title>
     </sp_page>
+    <sys_translated_text action="delete_multiple" query="documentkey=345c0ce76743320023c82e08f585ef57"/>
 </record_update>

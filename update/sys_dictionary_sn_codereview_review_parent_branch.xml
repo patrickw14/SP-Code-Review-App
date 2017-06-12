@@ -6,19 +6,18 @@
         <array_denormalized>false</array_denormalized>
         <attributes/>
         <audit>false</audit>
-        <calculation>(function calculatedFieldValue(current) {
+        <calculation><![CDATA[(function calculatedFieldValue(current) {
 
 	// Add your code here
 	return '';  // return the calculated value
 
-})(current);</calculation>
+})(current);]]></calculation>
         <choice/>
         <choice_field/>
         <choice_table/>
         <column_label>Parent Branch</column_label>
         <comments/>
         <create_roles/>
-        <customer_update>false</customer_update>
         <default_value/>
         <defaultsort/>
         <delete_roles/>
@@ -47,24 +46,21 @@
         <reference_qual/>
         <reference_qual_condition/>
         <reference_type/>
-        <replace_on_upgrade>false</replace_on_upgrade>
         <sizeclass/>
         <spell_check>false</spell_check>
         <staged>false</staged>
         <sys_class_name>sys_dictionary</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2017-05-06 01:44:07</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
-        <sys_id>df1154fc131f3200c20d5aef3244b046</sys_id>
+        <sys_id>01b41fa16713320023c82e08f585efa9</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name>Parent Branch</sys_name>
         <sys_package display_value="CodeReview" source="sn_codereview">8d80e4fd6722320023c82e08f585ef22</sys_package>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="CodeReview">8d80e4fd6722320023c82e08f585ef22</sys_scope>
         <sys_update_name>sys_dictionary_sn_codereview_review_parent_branch</sys_update_name>
         <sys_updated_by>system</sys_updated_by>
-        <sys_updated_on>2017-06-09 04:37:11</sys_updated_on>
+        <sys_updated_on>2017-06-12 02:46:59</sys_updated_on>
         <table_reference>false</table_reference>
         <text_index>false</text_index>
         <unique>false</unique>

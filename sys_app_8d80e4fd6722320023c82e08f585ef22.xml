@@ -3,7 +3,6 @@
     <sys_app action="INSERT_OR_UPDATE">
         <active>true</active>
         <enforce_license>log</enforce_license>
-        <has_demo_data>false</has_demo_data>
         <js_level>helsinki_es5</js_level>
         <licensable>true</licensable>
         <license_model>none</license_model>
@@ -11,7 +10,6 @@
         <menu/>
         <name>CodeReview</name>
         <private>false</private>
-        <restrict_runtime_access>false</restrict_runtime_access>
         <restrict_table_access>false</restrict_table_access>
         <runtime_access_tracking>permissive</runtime_access_tracking>
         <scope>sn_codereview</scope>

@@ -2,7 +2,6 @@
 <record_update>
     <sys_documentation element="" label="Reviewer" language="en" table="sn_codereview_reviewer">
         <sys_documentation action="INSERT_OR_UPDATE">
-            <customer_update>false</customer_update>
             <element/>
             <help/>
             <hint/>
@@ -10,17 +9,14 @@
             <language>en</language>
             <name>sn_codereview_reviewer</name>
             <plural>Reviewers</plural>
-            <replace_on_upgrade>false</replace_on_upgrade>
             <sys_class_name>sys_documentation</sys_class_name>
             <sys_created_by>admin</sys_created_by>
             <sys_created_on>2017-05-27 05:27:01</sys_created_on>
-            <sys_customer_update>false</sys_customer_update>
             <sys_id>21ef59e06703320023c82e08f585eff3</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_name>Reviewer</sys_name>
             <sys_package display_value="CodeReview" source="sn_codereview">8d80e4fd6722320023c82e08f585ef22</sys_package>
             <sys_policy/>
-            <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
             <sys_scope display_value="CodeReview">8d80e4fd6722320023c82e08f585ef22</sys_scope>
             <sys_update_name>sys_documentation_sn_codereview_reviewer__en</sys_update_name>
             <sys_updated_by>admin</sys_updated_by>

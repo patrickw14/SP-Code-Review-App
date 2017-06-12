@@ -2,21 +2,17 @@
 <record_update table="sp_row">
     <sp_row action="INSERT_OR_UPDATE">
         <class_name/>
-        <customer_update>false</customer_update>
         <order>1</order>
-        <replace_on_upgrade>false</replace_on_upgrade>
         <sp_column/>
         <sp_container display_value="Code Review Dashboard - Container 1">b45c0ce76743320023c82e08f585ef59</sp_container>
         <sys_class_name>sp_row</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2017-06-05 07:04:17</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>aa7cc02b6743320023c82e08f585ef0c</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name>1</sys_name>
         <sys_package display_value="CodeReview" source="sn_codereview">8d80e4fd6722320023c82e08f585ef22</sys_package>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="CodeReview">8d80e4fd6722320023c82e08f585ef22</sys_scope>
         <sys_update_name>sp_row_aa7cc02b6743320023c82e08f585ef0c</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
