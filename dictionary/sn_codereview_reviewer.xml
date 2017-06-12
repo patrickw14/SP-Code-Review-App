@@ -14,5 +14,8 @@
         <index name="index">
             <element name="review"/>
         </index>
+        <index name="index2">
+            <element name="name"/>
+        </index>
     </element>
 </database>

@@ -17,21 +17,24 @@
         </sys_ui_related_list_entry>
         <sys_ui_related_list action="INSERT_OR_UPDATE">
             <calculated_name>Review - Default view</calculated_name>
+            <customer_update>false</customer_update>
             <filter/>
             <name>sn_codereview_review</name>
             <order_by/>
             <position/>
             <related_list/>
+            <replace_on_upgrade>false</replace_on_upgrade>
             <sys_class_name>sys_ui_related_list</sys_class_name>
             <sys_created_by>admin</sys_created_by>
             <sys_created_on>2017-05-27 05:31:58</sys_created_on>
+            <sys_customer_update>false</sys_customer_update>
             <sys_domain>global</sys_domain>
-            <sys_domain_path>/</sys_domain_path>
             <sys_id>c201a1246703320023c82e08f585ef59</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_name>Review - Default view</sys_name>
             <sys_package display_value="CodeReview" source="sn_codereview">8d80e4fd6722320023c82e08f585ef22</sys_package>
             <sys_policy/>
+            <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
             <sys_scope display_value="CodeReview">8d80e4fd6722320023c82e08f585ef22</sys_scope>
             <sys_update_name>sys_ui_related_sn_codereview_review_null</sys_update_name>
             <sys_updated_by>admin</sys_updated_by>

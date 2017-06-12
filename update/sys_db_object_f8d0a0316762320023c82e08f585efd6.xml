@@ -4,10 +4,12 @@
         <access>public</access>
         <actions_access>false</actions_access>
         <alter_access>false</alter_access>
+        <behavior_access>false</behavior_access>
         <client_scripts_access>false</client_scripts_access>
         <configuration_access>false</configuration_access>
         <create_access>true</create_access>
         <create_access_controls>true</create_access_controls>
+        <customer_update>false</customer_update>
         <delete_access>true</delete_access>
         <extension_model/>
         <is_extendable>false</is_extendable>
@@ -17,21 +19,27 @@
         <number_ref/>
         <provider_class/>
         <read_access>true</read_access>
+        <replace_on_upgrade>false</replace_on_upgrade>
+        <restrict_actions_not_in_scope>false</restrict_actions_not_in_scope>
+        <restrict_rules_not_in_scope>false</restrict_rules_not_in_scope>
         <super_class/>
         <sys_class_code/>
         <sys_class_name>sys_db_object</sys_class_name>
         <sys_class_path/>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2017-05-06 01:34:27</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
         <sys_id>f8d0a0316762320023c82e08f585efd6</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name>Review</sys_name>
         <sys_package display_value="CodeReview" source="sn_codereview">8d80e4fd6722320023c82e08f585ef22</sys_package>
         <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="CodeReview">8d80e4fd6722320023c82e08f585ef22</sys_scope>
         <sys_update_name>sys_db_object_f8d0a0316762320023c82e08f585efd6</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
         <sys_updated_on>2017-05-06 01:34:27</sys_updated_on>
+        <ui_access>false</ui_access>
         <update_access>true</update_access>
         <user_role display_value="sn_codereview.review_user" name="sn_codereview.review_user">8641e0316762320023c82e08f585ef35</user_role>
         <ws_access>true</ws_access>

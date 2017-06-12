@@ -2,6 +2,7 @@
 <record_update>
     <sys_documentation element="parent_branch" label="Parent Branch" language="en" table="sn_codereview_review">
         <sys_documentation action="INSERT_OR_UPDATE">
+            <customer_update>false</customer_update>
             <element>parent_branch</element>
             <help/>
             <hint/>
@@ -9,14 +10,17 @@
             <language>en</language>
             <name>sn_codereview_review</name>
             <plural>Parent Branches</plural>
+            <replace_on_upgrade>false</replace_on_upgrade>
             <sys_class_name>sys_documentation</sys_class_name>
             <sys_created_by>admin</sys_created_by>
             <sys_created_on>2017-05-06 01:44:08</sys_created_on>
+            <sys_customer_update>false</sys_customer_update>
             <sys_id>bb73ec316762320023c82e08f585efde</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_name>Parent Branch</sys_name>
             <sys_package display_value="CodeReview" source="sn_codereview">8d80e4fd6722320023c82e08f585ef22</sys_package>
             <sys_policy/>
+            <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
             <sys_scope display_value="CodeReview">8d80e4fd6722320023c82e08f585ef22</sys_scope>
             <sys_update_name>sys_documentation_sn_codereview_review_parent_branch_en</sys_update_name>
             <sys_updated_by>admin</sys_updated_by>
