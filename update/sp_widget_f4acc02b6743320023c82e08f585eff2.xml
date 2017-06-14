@@ -4,181 +4,305 @@
         <client_script><![CDATA[function(spUtil, $scope) {
   /* widget controller */
   var c = this;
-	
+
 	spUtil.recordWatch($scope, "sn_codereview_reviewer", "", function(name, data) {
 		c.server.update();
 	});
-	
+
 	spUtil.recordWatch($scope, "sn_codereview_review", "", function(name, data) {
 		c.server.update();
 	});
+
+
+	c.getStatusColor = function(status) {
+		var color = '';
+		if (status == "rejected") {
+			color = 'task-status-red';
+		}
+		else if (status == "approved") {
+			color = 'task-status-green';
+		}
+		else if (status == "pending" || status == "assigned") {
+			color = 'task-status-orange';
+		}
+		else if (status == "open") {
+			color = 'task-status-grey';
+		}
+		return color;
+	}
+	
+	c.getStatusIcon = function(status) {
+		if (status == "rejected") {
+			return "fa fa-cross fa-lg reviewer-status-red";
+		}
+		else if (status == "approved") {
+			return "fa fa-check fa-lg reviewer-status-green";
+		}
+		else if (status == "pending") {
+			return "fa fa-ellipsis-h fa-lg reviewer-status-orange";
+		}
+	}
+
+
+
+	c.cycleReviews = function(element) {
+		$.fn.scrollBottom = function() {
+			return element[0].scrollHeight - this.scrollTop() - this.height();
+		};
+
+			var i = 0;
+			var cancel = setInterval(function(){
+				element.scrollTop(i++);
+				if (element.scrollBottom() == 0) {
+					console.log("done");
+					setTimeout(function(){i = 0}, 2000);
+				}
+			}, 30);
+
+		return cancel;
+	}
+
+
+	console.log(c.data.reviews);
+
+	c.buttonModel = {
+										value: "Autoscroll!",
+										btnClass: "btn-primary",
+										scroll: c.cycleReviews,
+										elements: [$('#test-1'), $('#test-2'), $('#test-3')],
+										intervals: [],
+										go: function() {
+											this.elements.forEach(
+												function(val, index){
+													this.intervals[index] = this.scroll(val);
+											}, this)
+										},
+
+										stop: function() {
+											this.intervals.forEach(
+												function(val, index){
+													clearInterval(val);
+											}, this)
+										},
+
+										 dothis: function() {
+											 if (this.state) {
+												 this.stop();
+												 this.value = "Autoscroll!";
+												 this.btnClass = "btn-primary"
+												 this.state = false;
+											 } else {
+												 this.go();
+												 this.state = true;
+												 this.value = "Stop Autoscroll";
+												 this.btnClass = "btn-danger";
+											 }
+										 }
+									};
+	
+	c.orderReviews = function(data) {
+		var unassigned = [];
+		var inprogress = [];
+		var done = [];
+		
+		// need concat if a sort has already been done
+		data = data.reduce(function(a, b) {
+			return a.concat(b);
+			},[]
+		);
+		
+		
+		data.forEach(function(review) {
+			if (review.status == 'open') unassigned.push(review);
+			else if (review.status == 'closed') done.push(review);
+			else inprogress.push(review);	
+		});
+		return [unassigned, inprogress, done];
+	}
+
+	c.data.reviews.sorted = c.orderReviews(c.data.reviews.all);
+	c.data.reviews.sorted = c.orderReviews(c.data.reviews.sorted); 
+	console.log(c.data.reviews.sorted);
+	
+
 }]]></client_script>
         <controller_as>c</controller_as>
         <css>// ----------------------------------------------------------------------------
 // Sass declarations
 // ----------------------------------------------------------------------------
-$background-color:  #2A2A2A;
-$value-color:       #fff;
-
-$title-color:       rgba(255, 255, 255, 0.7);
-$moreinfo-color:    rgba(255, 255, 255, 0.7);
 
 // Colors
-$color-purple: #6d79e8;
-$color-purple-light: #a0a8f1;
-$color-purple-lighter: #c6c9f6;
+$color-red: #F95050;
+$color-orange: #FC8A3D;
+$color-green: #71E279;
+$color-grey: #BDC0C4;
 
-$color-blue: #278efc;
-$color-blue-light: #83bfff;
-$color-blue-lighter: #bddcfc;
+$color-dark: #81878E;
+$color-darkest: #343D47;
+$color-lighter: #E6E8EA;
+$color-light: #BDC0C4;
 
-$color-aqua: #19c4d1;
-$color-aqua-light: #68d9e1;
-$color-aqua-lighter: #a3e6ee;
 
-$color-cyan: #289fbd;
-$color-cyan-light: #74c2e8;
-$color-cyan-lighter: #a9d9f0;
 
-$color-green: #71e279;
-$color-green-light: #a4eda8;
-$color-green-lighter: #d3f6d6;
 
-$color-yellow: #fcc742;
-$color-yellow-light: #ffdb85;
-$color-yellow-lighter: #fdeec5;
-
-$color-orange: #fc8a3d;
-$color-orange-light: #fdb481;
-$color-orange-lighter: #ffdcc6;
-
-$color-red: #f95050;
-$color-red-light: #fb8d8e;
-$color-red-lighter: #fccac9;
-
-$color-pink: #f95070;
-$color-pink-light: #fa8da2;
-$color-pink-lighter: #fecad6;
-
-$color-chocolate: #d2691e;
-$color-chocolate-light: #eca979;
-$color-chocolate-lighter: #fcf1e9;
-
-$color-map: $color-yellow,
-            $color-blue,
-            $color-green,
-            $color-purple,
-            $color-chocolate;
-
-h1 {
-  text-align: center;
-  font-size: 66px; 
+// Removing Bootstrap grid gutters
+.row.no-gutters {
+  margin-right: 0;
+  margin-left: 0;
+}
+.row.no-gutters &gt; [class^="col-"],
+.row.no-gutters &gt; [class*=" col-"] {
+  padding-right: 0;
+  padding-left: 0;
 }
 
-h2 {
-  text-align: center;
-  font-size: 50px;
+// Styling scrollbars
+::-webkit-scrollbar {
+    width: 10px;
+    background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background-color: $color-dark;
+  outline: 1px solid slategrey;
 }
 
-h3 {
-  color: $title-color;
-  text-align: left;
-  font-size: 2.2em;
-  background-color: #222222;
+.task-card-column {
+  max-height: 70vh;
+  overflow-y: scroll;
+
+}
+.widget-contents {
+  box-sizing: border-box;
+}
+
+.main-title {
+	display: inline;
+}
+
+.btn-autoscroll {
   display: block;
-  width: 100%;
-  padding: 10px 0;
-  border-bottom: solid 1px rgba(0, 0, 0, 0.3);
-  -webkit-box-shadow: 0px 2px 1px 0px rgba(255,255,255,0.10);
-  box-shadow: 0px 1px 1px 0px rgba(255,255,255,0.10);
-  margin: 0;
-  padding-left: 5px;
-  padding-right: 5px;
+  padding: 9px 6px;
+  margin-top: 10px;
 }
 
-.task {
-  padding: 10px;
-  border-bottom: solid 1px rgba(0, 0, 0, 0.3);
-	position: relative;
-  
-  a {
-    font-size: 25px;
-  }
-  
-  .task-description {
-    font-size: 15px;
-  }
-  
-  .task-branch {
-    font-weight: bold;
-  }
-  
-  .task-author {
-    font-style: italic;
-  }
-  
-  .task-age {
-    font-style: italic;
-    color: #BDC0C4;
-  }
-  
-  .urgency-bar {
-    top: 0;
-    left: 0;
-    position: absolute;
-    border-bottom-left-radius: 2px;
-    border-top-left-radius: 2px;
-    height: 100%;
-    width: 5px;
-    margin: 0;
-    
-    &amp;.medium-urgency {
-      background-color: $color-yellow;
-    }
-    
-    &amp;.high-urgency {
-      background-color: $color-red;
-    }
-  }
-}
 
-.column-container {
-  margin-top: 30px;
-  display: -webkit-flex;
+//...............
+// Task Card
+//...............
+
+
+.task-item {
+  background-color: white;
+  color: $color-darkest;
+  min-height: 100px;
   display: flex;
-  -webkit-flex-direction: row /* works with row or column */
-    flex-direction: row;
-  -webkit-align-items: center;
-  align-items: center;
-  -webkit-justify-content: center;
-  justify-content: center;
-
-  .column {
-    flex: 1 1 auto;
-    max-width: 300px;
-    background-color: $background-color;
-    margin-left: 10px;
-    margin-right: 10px;
+  align-items: stretch;
+  cursor: pointer;
+  margin-bottom: 5px;
+  transition: background-color 0.5s ease-out;
+  //border-top: 2px solid $color-lighter;
+  &amp;:hover {
+    background-color: $color-lighter;
   }
+
 }
 
-.empty-task-message {
-  text-align: center;
-  font-size: 40px;
+
+// Task Status Bar
+.task-status {
+  align-self: stretch;
 }
 
-.activity-stream {
-	position: absolute;
-  width: 400px;
-  top: 0;
-  right: 0;
+.task-status-red {
+  background-color: $color-red;
+  border-color: $color-red;
+}
+.task-status-orange {
+  background-color: $color-orange;
+  border-color: $color-orange;
+}
+.task-status-green {
+  background-color: $color-green;
+  border-color: $color-green
+}
+.task-status-grey {
+  background-color: $color-grey;
+  border-color: $color-grey
+}
+
+// Task Text
+.task-text-container {
+  display: flex;
+}
+
+.task-text {
+  padding: 15px;
+  min-height: 100px;
+  display: flex;
+  flex-direction: column;
+  align-content: space-between;
+  align-self: stretch;
+}
+
+.task-description {
+  flex-grow: 1;
+  font-size: 18px;
+}
+
+.task-author {
+  order: 3;
+  align-self: flex-start;
+}
+
+// Task Reviewers
+.task-reviewer-container {
+  display: flex;
+  justify-content: center;
+}
+
+.task-reviewer {
+  color: white;
+  border-radius: 100%;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  margin-right: 10px;
+  padding-right: 10px;
+  display: flex;
+  width: 50px;
+  justify-content: flex-start;
+  align-content: flex-start;
+  position: relative;
+
+}
+
+.reviewer-avatar {
+  border-width: 2px;
+}
+.reviewer-status {
+  z-index: 2;
+  
+  position: absolute;
+  bottom: 0px;
+  right: -10px;
+  color: #278EFC;
+  
+}
+
+.reviewer-status-red {
+  color: $color-red;
+}
+.reviewer-status-orange {
+  color: $color-orange;
+}
+.reviewer-status-green {
+  color: $color-green;
 }</css>
         <data_table>sp_instance</data_table>
         <demo_data/>
         <description/>
         <docs/>
         <field_list/>
-        <has_preview>false</has_preview>
+        <has_preview>true</has_preview>
         <id>code_review_dash</id>
         <internal>false</internal>
         <link/>
@@ -189,8 +313,8 @@ h3 {
         <script><![CDATA[(function() {
   /* populate the 'data' object */
   /* e.g., data.table = $sp.getValue('table'); */
-	
-	data.reviews = {
+
+	/*data.reviews = {
 		"Unassigned": []
 	};
 	// Let's start with getting unassigned reviews.
@@ -199,9 +323,9 @@ h3 {
 	assignmentsGR.query();
 	while(assignmentsGR.next())
 		assignedReviewIDs.push(assignmentsGR.getValue("review"));
-	
+
 	//console.log(assignedReviewIDs);
-	
+
 	var unassignedReviewGR = new GlideRecord("sn_codereview_review");
 	unassignedReviewGR.addQuery("sys_id", "NOT IN", assignedReviewIDs);
 	unassignedReviewGR.addActiveQuery();
@@ -213,38 +337,155 @@ h3 {
 			author: unassignedReviewGR.getDisplayValue("owner"),
 			branch: unassignedReviewGR.getValue("branch")
 		});
-	
-	
+*/
+	data.reviews = {
+	all: [],
+	sorted: []
+};
+
+	var gr = new GlideRecord('sn_codereview_review');
+	gr.query();
+	while (gr.next()) {
+		var reviewerGR = new GlideRecord("sn_codereview_reviewer");
+		reviewerGR.addQuery("review", gr.getValue("sys_id"));
+		reviewerGR.query();
+
+		var reviewers = [];
+		while(reviewerGR.next()) {
+			reviewers.push({
+				name: reviewerGR.getDisplayValue('name'),
+				id: reviewerGR.getValue('name'),
+				decision: reviewerGR.getValue('decision')
+			});
+		}
+
+		var item = {
+			description: gr.getValue('description'),
+			author: gr.getDisplayValue('owner'),
+			date: gr.getValue('sys_created_on'),
+			link: gr.getValue('link'),
+			branch: gr.getValue('branch'),
+			status: gr.getValue('state'),
+			id: gr.getValue('sys_id'),
+			reviewers: reviewers
+		};
+
+		data.reviews.all.push(item);
+
+	}
+
+
+
+
 })();]]></script>
         <servicenow>false</servicenow>
         <sys_class_name>sp_widget</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2017-06-05 07:04:59</sys_created_on>
         <sys_id>f4acc02b6743320023c82e08f585eff2</sys_id>
-        <sys_mod_count>17</sys_mod_count>
+        <sys_mod_count>625</sys_mod_count>
         <sys_name>Code Review Dash</sys_name>
         <sys_package display_value="CodeReview" source="sn_codereview">8d80e4fd6722320023c82e08f585ef22</sys_package>
         <sys_policy/>
         <sys_scope display_value="CodeReview">8d80e4fd6722320023c82e08f585ef22</sys_scope>
         <sys_update_name>sp_widget_f4acc02b6743320023c82e08f585eff2</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2017-06-05 15:48:07</sys_updated_on>
+        <sys_updated_on>2017-06-14 22:04:51</sys_updated_on>
         <template><![CDATA[<div class="widget-contents">
-  <h1>Code Reviews</h1>
-  
-  <div class="column-container">
-    <div class="column" ng-repeat="(category, reviewList) in c.data.reviews">
-      <h2>{{category}}</h2>
-      <div class="task" ng-repeat="review in reviewList">
-        <div class="task-description">{{review.description}}</div>
-        <div class="task-branch">{{review.branch}}</div>
-        <div class="task-author">By {{review.author}}</div>
+  <h1 class="main-title">Code Reviews</h1>
+
+  <button class="btn btn-autoscroll" ng-click=c.buttonModel.dothis() ng-class="c.buttonModel.btnClass">
+    {{c.buttonModel.value}}
+  </button>
+
+  <div class="container">
+    <div class="row">
+
+      <div class="col-md-4">
+        <h2>Unassigned <span class="title-counter">({{c.data.reviews.sorted[0].length}})</span></h2>
+        <div class="task-card-column" id="test-1">
+
+          <div class="task" ng-repeat="review in c.data.reviews.sorted[0]">
+            <a href="{{review.link}}">
+              <div class="row no-gutters task-item">
+                <div class="col-xs-1 task-status" ng-class="c.getStatusColor(review.status)"></div>
+                <div class="col-xs-8 task-text-container">
+                  <div class="task-text">
+                    <div class="task-description">{{review.description}}</div>
+                    <div class="task-author">{{review.author}} on {{review.date}}</div>
+                  </div>
+                </div>
+                <div class="col-xs-3">
+                  <div class="task-reviewer-container" ng-repeat="reviewer in review.reviewers">
+                    <div class="task-reviewer">
+                      <sn-avatar primary="reviewer.id" class="avatar-large reviewer-avatar" show-presence="false" enable-context-menu="false"></sn-avatar>
+                      <div class="reviewer-status" ng-class="c.getStatusIcon(reviewer.decision)"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
       </div>
-      <h3 ng-if="reviewList.length == 0">
-        Nothing here.
-      </h3>
+
+      <div class="col-md-4">
+        <h2>In Progress!  <span class="title-counter">({{c.data.reviews.sorted[1].length}})</span></h2>
+        <div class="task-card-column" id="test-2">
+          <div class="task" ng-repeat="review in c.data.reviews.sorted[1]">
+            <a href="{{review.link}}">
+              <div class="row no-gutters task-item">
+                <div class="col-xs-1 task-status " ng-class="c.getStatusColor(review.status)"></div>
+                <div class="col-xs-8 task-text-container">
+                  <div class="task-text">
+                    <div class="task-description">{{review.description}}</div>
+                    <div class="task-author">{{review.author}} on {{review.date}}</div>
+                  </div>
+                </div>
+                <div class="col-xs-3">
+                  <div class="task-reviewer-container" ng-repeat="reviewer in review.reviewers">
+                    <div class="task-reviewer">
+                      <sn-avatar primary="reviewer.id" class="avatar-large" show-presence="false" enable-context-menu="false"></sn-avatar>
+                      <div class="reviewer-status" ng-class="c.getStatusIcon(reviewer.decision)"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <h2>Done. <span class="title-counter">({{c.data.reviews.sorted[2].length}})</span></h2>
+        <div class="task-card-column" id="test-3">
+          <div class="task" ng-repeat="review in c.data.reviews.sorted[2]">
+            <a href="{{review.link}}">
+              <div class="row no-gutters task-item">
+                <div class="col-xs-1 task-status" ng-class="c.getStatusColor(review.status)"></div>
+                <div class="col-xs-8 task-text-container">
+                  <div class="task-text">
+                    <div class="task-description">{{review.description}}</div>
+                    <div class="task-author">{{review.author}} on {{review.date}}</div>
+                  </div>
+                </div>
+                <div class="col-xs-3">
+                  <div class="task-reviewer-container" ng-repeat="reviewer in review.reviewers">
+                    <div class="task-reviewer">
+                      <sn-avatar primary="reviewer.id" class="avatar-large" show-presence="false" enable-context-menu="false"></sn-avatar>
+                      <div class="reviewer-status" ng-class="c.getStatusIcon(reviewer.decision)"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
-</div>]]></template>
+</div>
+]]></template>
     </sp_widget>
 </record_update>
