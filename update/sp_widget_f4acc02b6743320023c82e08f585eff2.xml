@@ -6,11 +6,16 @@
   var c = this;
 
 	spUtil.recordWatch($scope, "sn_codereview_reviewer", "", function(name, data) {
-		c.server.update();
+		c.server.update().then(function() {
+			c.data.reviews.sorted = c.orderReviews(c.data.reviews.all);
+		})
 	});
 
 	spUtil.recordWatch($scope, "sn_codereview_review", "", function(name, data) {
-		c.server.update();
+		c.server.update().then(function() {
+			c.data.reviews.sorted = c.orderReviews(c.data.reviews.all);
+		});
+		
 	});
 
 
@@ -383,14 +388,14 @@ $color-light: #BDC0C4;
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2017-06-05 07:04:59</sys_created_on>
         <sys_id>f4acc02b6743320023c82e08f585eff2</sys_id>
-        <sys_mod_count>625</sys_mod_count>
+        <sys_mod_count>626</sys_mod_count>
         <sys_name>Code Review Dash</sys_name>
         <sys_package display_value="CodeReview" source="sn_codereview">8d80e4fd6722320023c82e08f585ef22</sys_package>
         <sys_policy/>
         <sys_scope display_value="CodeReview">8d80e4fd6722320023c82e08f585ef22</sys_scope>
         <sys_update_name>sp_widget_f4acc02b6743320023c82e08f585eff2</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2017-06-14 22:04:51</sys_updated_on>
+        <sys_updated_on>2017-06-14 22:23:51</sys_updated_on>
         <template><![CDATA[<div class="widget-contents">
   <h1 class="main-title">Code Reviews</h1>
 
